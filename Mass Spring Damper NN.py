@@ -1,5 +1,8 @@
 import torch
 import torch.nn as nn
+from Mass_Spring_Damper_Data import generate_msd_data
+
+X, Y = generate_msd_data()
 
 class MSDNet(nn.Module):
     def __init__(self):
@@ -32,3 +35,8 @@ for epoch in range(3000):
     if epoch % 500 == 0:
         print(f"Epoch {epoch}, Loss {loss.item():.6f}")
 
+with torch.no_grad():
+    test_sample = X_t[:5]
+    pred = model(test_sample)
+    print("Predicted:\n", pred)
+    print("True:\n", Y_t[:5])
